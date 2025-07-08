@@ -1,0 +1,40 @@
+{% macro render_result_card(result) %}
+<div class="result-card">
+  <h3 style="margin-top: 0; font-size: 15px">Eyeglass ID: {{ result[0] }}</h3>
+
+  <table style="border-collapse: collapse; margin-bottom: 10px; margin-left: auto; margin-right: auto;">
+    <tr>
+      <th style="padding-right: 15px;"></th>
+      <th style="padding-right: 15px;">SPH</th>
+      <th style="padding-right: 15px;">CYL</th>
+      <th style="padding-right: 15px;">AXIS</th>
+      <th style="padding-right: 15px;">ADD</th>
+    </tr>
+    <tr>
+      <td><strong>RIGHT</strong></td>
+      <td>{{ result[8] }}</td>
+      <td>{{ result[9] }}</td>
+      <td>{{ result[10] }}</td>
+      <td>{{ result[11] }}</td>
+    </tr>
+    <tr>
+      <td><strong>LEFT</strong></td>
+      <td>{{ result[4] }}</td>
+      <td>{{ result[5] }}</td>
+      <td>{{ result[6] }}</td>
+      <td>{{ result[7] }}</td>
+    </tr>
+  </table>
+
+  <div style="font-size: 14px; color: #555; text-align: center">
+    <em>{{ result[1] }} mm</em> |
+    <em>{{ result[2] }}</em> |
+    <em>{{ result[3] }}</em>
+  </div>
+
+  <!--<div style="text-align: center; padding: 10px 10px;">
+    <button style = "font-size: 12px; padding: 3px 6px; background-color: white; color: black; border: 1px solid #ccc;  margin-right: 0px;"> Print </button>
+    <button style =  "font-size: 12px; padding: 3px 6px; background-color: white; color: black; border: 1px solid #ccc; margin-left: 0px"> Info </button>
+  </div> -->
+</div>
+{% endmacro %}

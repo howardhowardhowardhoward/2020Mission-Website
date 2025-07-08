@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Database</title>
+
+    <style>
+  body {
+    background-color: #f2f6fa;
+    font-family: 'Arial', 'sans-serif', Tahoma, Geneva, Verdana;
+    color: #333;
+    padding: 30px;
+  }
+
+  h1 {
+    font-size: 26px;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-weight: 600;
+  }
+
+  h3 {
+    color: #34495e;
+    margin-top: 30px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    margin-top: 15px;
+    font-weight: 400;
+  }
+
+  input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 250px;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 400;
+    margin-left: 10px;
+  }
+
+  button:hover {
+    background-color: #2980b9;
+  }
+
+  form {
+      max-width: 550px;
+      margin: 0 auto;
+      padding-left: 80px;           /* Nudges content right */
+      padding-right: 40px;
+      background: #fff;
+      padding-top: 25px;
+      padding-bottom: 25px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+}
+
+  table th {
+    text-align: left;
+    color: #2c3e50;
+    font-weight: 400;
+  }
+
+  table td {
+    padding: 4px 8px;
+  }
+
+  table tr:nth-child(even) {
+    background-color: #f5f5f5;
+  }
+
+  em {
+    font-style: normal;
+    color: #888;
+  }
+ .attributes-table {
+  width: fit-content;
+  margin-top: 20px;
+  border-collapse: collapse;
+  font-size: 14px;
+     font-weight: normal;
+}
+
+.attributes-table th,
+.attributes-table td {
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.attributes-table input {
+  padding: 6px;
+  font-size: 13px;
+  width: 80px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.attributes-meta {
+  margin-top: 0px;
+  font-size: 14px;
+  color: #555;
+  width: 80px;
+  display: flex;
+  gap: 20px;
+}
+
+.attributes-meta input {
+  width: 80px; /* or 50px, depending on how small you want it */
+  font-size: 13px;
+}
+
+.attributes-table th {
+  font-weight: normal;
+}
+
+  .results-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.result-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #f9f9f9;
+    width: fit-content;
+    font-family: Arial, sans-serif;
+    border-radius: 5px;
+}
+  </style>
+</head>
+<body>
+<h1 style = "text-align: center; font-size: 25px"> Edit Eyeglasses</h1>
+<form method = "post" action = "/admin" enctype="multipart/form-data">
+<h3> Delete by ID </h3>
+<label for="Eyeglass_id">Eyeglass ID:</label>
+    <input type = "text" name = "id" placeholder="Eyeglass ID" id = "Eyeglass_id" style="width: 390px; margin-right: 19px;">
+    <button type = "submit" name = "submit_button" value = "id">SUBMIT </button>
+
+
+    {% if result1 %}
+        <div class = "result-card">
+        {{result1}}
+        </div>
+    {% endif %}
+
+<h3> Bulk Upload </h3>
+          <div style="margin-bottom: 15px;">
+    <label for="frame_csv_file" style="display: block; margin-bottom: 5px;">Upload Frame CSV:</label>
+    <input type="file" id="frame_csv_file" name="frame_csv_file" accept=".csv" style="width: 100%;">
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <label for="lens_csv_file" style="display: block; margin-bottom: 5px;">Upload Lens CSV:</label>
+    <input type="file" id="lens_csv_file" name="lens_csv_file" accept=".csv" style="width: 100%;">
+  </div>
+
+  <div style="text-align: center;">
+    <button type="submit" name="submit_button" value = "bulk">
+      Upload CSV
+    </button>
+  </div>
+
+    {% if result_3 %}
+        <div class = "result-card">
+        {{result_3}}
+        </div>
+    {% endif %}
+
+
+<h3> Add Glasses by Attributes </h3>
+
+    <table class="attributes-table">
+      <tr>
+        <th></th>
+        <th>SPH</th>
+        <th>CYL</th>
+        <th>AXIS</th>
+          <th>ADD</th>
+      </tr>
+      <tr>
+        <td>RIGHT</td>
+        <td><input type="text" name="sph_right" placeholder = "OD-SPH"></td>
+        <td><input type="text" name="cyl_right" placeholder = "OD-CYL"></td>
+        <td><input type="text" name="axis_right" placeholder = "OD-Axis"></td>
+          <td> <input type = "text" name = "add_right" placeholder= "OD-ADD"> </td>
+      </tr>
+
+      <tr>
+        <td>LEFT</td>
+        <td><input type="text" name="sph_left" placeholder="OS-SPH"></td>
+        <td><input type="text" name="cyl_left" placeholder="OS-CYL"></td>
+        <td><input type="text" name="axis_left" placeholder="OS-Axis"></td>
+        <td><input type="text" name="add_left" placeholder="OS-ADD"></td>
+
+      </tr>
+        <tr>
+                <td>FRAME</td>
+                <td><input type="text" name="bridge size" placeholder="Bridge Size"></td>
+              <td><input type = "text" name = "gender" placeholder="Gender"></td>
+            <td><input type = "text" name = "description" placeholder="Description"></td>
+        </tr>
+    </table>
+
+        <div style = "text-align: center;; margin-top: 20px;">
+          <button type="submit" name = "submit_button" value = "attributes"> SUBMIT </button>
+        </div>
+    {% if result2 %}
+        <div class = "result-card">
+        {{result2}}
+        </div>
+    {% endif %}
+
+</form>
+
+
+
+<div style="text-align: center; margin-top: 20px; margin-left: 30px">
+    <button onclick="window.location.href = '{{url_for('views.protected_page_general')}}'"> Return to search page </button>
+</div>
+
+</body>
+</html>
