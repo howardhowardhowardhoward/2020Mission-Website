@@ -60,7 +60,7 @@
 
 6. Visit [http://localhost:5001](http://localhost:5001) in your browser.
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 2020Mission/
