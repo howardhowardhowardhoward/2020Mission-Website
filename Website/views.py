@@ -24,7 +24,21 @@ def protected_page_general():
             LCYL, LSPH, LAxis, LADD = form.get("cyl_left"), form.get("sph_left"), form.get("axis_left"), form.get("add_left")
             RCYL, RSPH, RAxis, RADD = form.get("cyl_right"), form.get("sph_right"), form.get("axis_right"), form.get("add_right")
             bridge, gender = form.get("bridge size"), form.get("gender")
-            glasses_desc = search_by_attributes(cursor = my_cursor, lcyl=LCYL, lsph=LSPH, laxis=LAxis, ladd=LADD, rsph=RSPH, rcyl=RCYL, raxis=RAxis, radd=RADD, bridge=bridge, gender=gender)
+            search_type = request.form.get('search-type')
+            glasses_desc = []
+            if search_type == 'exact':
+                glasses_desc = search_by_attributes(cursor=my_cursor, lcyl=LCYL, lsph=LSPH, laxis=LAxis, ladd=LADD,
+                                                    rsph=RSPH, rcyl=RCYL, raxis=RAxis, radd=RADD, bridge=bridge,
+                                                    gender=gender, sph_range=0, cyl_range=0, axis_range=0)
+            elif search_type == 'general':
+                glasses_desc = search_by_attributes(cursor=my_cursor, lcyl=LCYL, lsph=LSPH, laxis=LAxis, ladd=LADD,
+                                                    rsph=RSPH, rcyl=RCYL, raxis=RAxis, radd=RADD, bridge=bridge,
+                                                    gender=gender, sph_range=0.50, cyl_range=0.50, axis_range=30)
+            elif search_type == 'advanced':
+                glasses_desc = search_by_attributes(cursor=my_cursor, lcyl=LCYL, lsph=LSPH, laxis=LAxis, ladd=LADD,
+                                                    rsph=RSPH, rcyl=RCYL, raxis=RAxis, radd=RADD, bridge=bridge,
+                                                    gender=gender, sph_range=0.75, cyl_range=0.75, axis_range=60)
+
             if not glasses_desc:
                 session['attributes'] = ''
                 return render_template('General_lookup.html', attribute_result = 'Glasses Not Found', id_result = session['id'])
@@ -80,7 +94,6 @@ def protected_page_admin():
             if 2 * len(frame_reader) - 1 == len(lens_reader):
                 for i in range(1, len(frame_reader)):
                     if frame_reader[i][0] == lens_reader[2*i][0] and lens_reader[2*i][0] == lens_reader[2*i-1][0] and lens_reader[2*i-1][1].strip() == 'R' and lens_reader[2*i][1].strip() == 'L':
-                        print('start')
                         val = add_to_database(ids = int(frame_reader[i][0]), bridge = frame_reader[i][1], gender= frame_reader[i][2], description= frame_reader[i][3], lsph = lens_reader[2*i][2], lcyl= lens_reader[2*i][3], laxis = lens_reader[2*i][4] , ladd = lens_reader[2*i][5], rsph = lens_reader[2*i - 1][2], rcyl= lens_reader[2*i-1][3], raxis= lens_reader[2*i-1][4],radd= lens_reader[2*i-1][5], cursor = my_cursor)
                         if not val:
                             return render_template('Admin_page.html', result_3 ="INVALID INPUTS AT ROW " + str(i))

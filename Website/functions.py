@@ -1,6 +1,7 @@
 import csv
 import io
 
+
 #DATABASE MODIFIER FUNCTIONS
 def add_to_database(ids: int, lsph: str,  rsph: str, bridge: str, gender: str, cursor, lcyl = None, laxis = None, ladd = None, rcyl = None, raxis = None, radd = None, description = None) -> bool:
     """
@@ -77,8 +78,8 @@ def csv_to_list(cv)-> list:
     csv_text = io.TextIOWrapper(cv, encoding='utf-8')
     return list(csv.reader(csv_text))
 
-#DATABASE SEARCHING FUNCTIONS
 
+#DATABASE SEARCH FUNCTIONS
 def search_by_id(id: int, my_cursor) -> list:
     """
     Returns the details of the eyeglass with the specified id in the form of a list
@@ -96,7 +97,7 @@ def search_by_id(id: int, my_cursor) -> list:
     glasses_desc = my_cursor.fetchall()
     return glasses_desc
 
-def search_by_attributes(cursor, lsph = None,  rsph = None, bridge = None, gender = None, lcyl = None, laxis = None, ladd = None, rcyl = None, raxis = None, radd = None, description = None) -> list:
+def search_by_attributes(cursor, lsph = None,  rsph = None, bridge = None, gender = None, lcyl = None, laxis = None, ladd = None, rcyl = None, raxis = None, radd = None, sph_range = None, cyl_range = None, axis_range = None) -> list:
     """
     Returns the details of the eyeglasses which meet the specified criteria
     """
@@ -111,20 +112,20 @@ def search_by_attributes(cursor, lsph = None,  rsph = None, bridge = None, gende
             JOIN Lens l2 ON Frame.id = l2.id AND l2.Eye = 'R'
             WHERE"""
         if lsph:
-            query_call += ' l1.sph = ' + lsph + ' AND'
+            query_call += ' l1.sph BETWEEN ' + str(float(lsph) - sph_range) + ' AND ' + str(float(lsph) + sph_range) + ' AND'
         if lcyl:
-            query_call += " l1.cyl = " + lcyl + ' AND'
+            query_call += " l1.cyl BETWEEN " + str(float(lcyl) - cyl_range) + ' AND ' + str(float(lcyl) + cyl_range) + ' AND'
         if laxis:
-            query_call += ' l1.axis = ' + laxis + ' AND'
+            query_call += ' l1.axis BETWEEN ' + str(float(laxis) - axis_range) + ' AND ' + str(float(laxis) + axis_range) + ' AND'
         if ladd:
             query_call += ' l1.add = ' + ladd + ' AND'
 
         if rsph:
-            query_call += ' l2.sph = ' + rsph + ' AND'
+            query_call += ' l2.sph BETWEEN ' + str(float(rsph) - sph_range) + ' AND ' + str(float(rsph) + sph_range) + ' AND'
         if rcyl:
-            query_call += " l2.cyl = " + rcyl + ' AND'
+            query_call += " l2.cyl BETWEEN " + str(float(rcyl) - cyl_range) + ' AND ' + str(float(rcyl) + cyl_range) + ' AND'
         if raxis:
-            query_call += ' l2.axis = ' + raxis + ' AND'
+            query_call += ' l2.axis BETWEEN ' + str(float(raxis) - axis_range) + ' AND ' + str(float(raxis) + axis_range) + ' AND'
         if radd:
             query_call += ' l2.add = ' + radd + ' AND'
 
