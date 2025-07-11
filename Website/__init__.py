@@ -1,15 +1,19 @@
+from dotenv import load_dotenv
+import os
 from flask import *
 import mysql.connector
+
+load_dotenv()
 
 def create_app():
     app = Flask(__name__)
     app.secret_key = 'hello world'
     app.mydb = mysql.connector.connect(
-        host='localhost',
-        user='root',
-        password='fakepassword',
+        host= os.getenv('DB_HOST'),
+        user= os.getenv('DB_USER'),
+        password= os.getenv('DB_PASS'),
         port=3306,
-        database="Mission"
+        database= os.getenv('DB_NAME')
     )
 
     from .views import views

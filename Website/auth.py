@@ -13,7 +13,7 @@ def login():
 
         if (usernames, password) in users:
             session['logged_in'] = True
-            my_cursor.execute("SELECT Priviledges FROM login_info WHERE username = %s", (usernames,))
+            my_cursor.execute("SELECT privileges FROM login_info WHERE username = %s", (usernames,))
             privi = my_cursor.fetchall()
             if privi == [(0,)]:
                 session['privilege'] = 0
