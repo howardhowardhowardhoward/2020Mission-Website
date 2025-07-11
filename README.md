@@ -43,9 +43,7 @@
    pip install -r requirements.txt
    ```
 
-4. Configure your MySQL connection in `Website/__init__.py`
-
-First, create a `.env` file in your project root with the following content:
+4. Create a `.env` file in your project root with the following content:
 
 ```env
 DB_HOST=your_host
