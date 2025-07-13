@@ -9,11 +9,11 @@ def create_app():
     app = Flask(__name__)
     app.secret_key = 'hello world'
     app.mydb = mysql.connector.connect(
-        host= 'localhost', #os.getenv('DB_HOST'),
-        user= 'root', #os.getenv('DB_USER'),
-        password= 'fakepassword', #os.getenv('DB_PASS'),
+        host= os.getenv('DB_HOST'),
+        user= os.getenv('DB_USER'),
+        password= os.getenv('DB_PASS'),
         port=3306,
-        database= 'Mission' #os.getenv('DB_NAME')
+        database= os.getenv('DB_NAME')
     )
 
     from .views import views
