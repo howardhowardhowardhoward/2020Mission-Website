@@ -43,15 +43,14 @@
    pip install -r requirements.txt
    ```
 
-4. Configure your MySQL connection in `Website/__init__.py`:
-   ```python
-   mysql.connector.connect(
-       host='your_host',
-       user='your_username',
-       password='your_password',
-       database='your_db_name'
-   )
-   ```
+4. Create a `.env` file in your project root with the following content:
+
+```env
+DB_HOST=your_host
+DB_USER=your_username
+DB_PASSWORD=your_password
+DB_NAME=your_db_name
+```
 
 5. Run the app:
    ```bash
