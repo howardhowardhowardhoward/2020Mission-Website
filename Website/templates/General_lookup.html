@@ -196,22 +196,23 @@
       </tr>
       <tr>
         <td>RIGHT</td>
-        <td><input type="text" name="sph_right" placeholder="OD-SPH"></td>
-        <td><input type="text" name="cyl_right" placeholder="OD-CYL"></td>
-        <td><input type="text" name="axis_right" placeholder="OD-Axis"></td>
-        <td><input type="text" name="add_right" placeholder="OD-ADD"></td>
+        <td><input type="text" name="sph_right" placeholder="OD-SPH" value = "{{ previous_search['rsph'] or ''}}"></td>
+        <td><input type="text" name="cyl_right" placeholder="OD-CYL" value = "{{ previous_search['rcyl'] or ''}}"></td>
+        <td><input type="text" name="axis_right" placeholder="OD-Axis" value = "{{ previous_search['raxis'] or ''}}"></td>
+        <td><input type="text" name="add_right" placeholder="OD-ADD" value = "{{ previous_search['radd'] or ''}}"></td>
       </tr>
       <tr>
         <td>LEFT</td>
-        <td><input type="text" name="sph_left" placeholder="OS-SPH"></td>
-        <td><input type="text" name="cyl_left" placeholder="OS-CYL"></td>
-        <td><input type="text" name="axis_left" placeholder="OS-Axis"></td>
-        <td><input type="text" name="add_left" placeholder="OS-ADD"></td>
+        <td><input type="text" name="sph_left" placeholder="OS-SPH" value = "{{ previous_search['lsph'] or ''}}"></td>
+        <td><input type="text" name="cyl_left" placeholder="OS-CYL" value = "{{ previous_search['lcyl'] or ''}}"></td>
+        <td><input type="text" name="axis_left" placeholder="OS-Axis" value = "{{ previous_search['laxis'] or ''}}"></td>
+        <td><input type="text" name="add_left" placeholder="OS-ADD" value = "{{ previous_search['ladd'] or ''}}"></td>
       </tr>
       <tr>
         <td>FRAME</td>
-        <td><input type="text" name="bridge size" placeholder="Bridge Size"></td>
-        <td><input type="text" name="gender" placeholder="Gender"></td>
+        <td><input type="text" name="bridge size" placeholder="Bridge Size" value = "{{ previous_search['bridge'] or ''}}"></td>
+        <td><input type="text" name="gender" placeholder="Gender" value = "{{ previous_search['gender'] or ''}}"></td>
+        <td><input type ="text" name="description" placeholder="Description" value = "{{ previous_search['description'] or ''}}"></td>
       </tr>
     </table>
 

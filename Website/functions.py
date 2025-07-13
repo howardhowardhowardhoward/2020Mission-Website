@@ -1,9 +1,17 @@
 import csv
 import io
 
+#Form retrieval functions
+def info_retrieve(form) -> dict:
+    LCYL, LSPH, LAxis, LADD = form.get("cyl_left"), form.get("sph_left"), form.get("axis_left"), form.get("add_left")
+    RCYL, RSPH, RAxis, RADD = form.get("cyl_right"), form.get("sph_right"), form.get("axis_right"), form.get(
+        "add_right")
+    bridge, gender, description = form.get("bridge size"), form.get("gender"), form.get("description")
+    return  {'lsph' :LSPH, 'lcyl':LCYL, 'laxis': LAxis, 'ladd':LADD, 'rsph':RSPH, 'rcyl': RCYL, 'raxis': RAxis,
+             'radd': RADD, 'bridge':bridge, 'gender': gender, 'description': description}
 
 #DATABASE MODIFIER FUNCTIONS
-def add_to_database(ids: int, lsph: str,  rsph: str, bridge: str, gender: str, cursor, lcyl = None, laxis = None, ladd = None, rcyl = None, raxis = None, radd = None, description = None) -> bool:
+def add_to_database(ids: int, details: dict, cursor) -> bool:
     """
     Adds one eyeglass to the database based off given values
     Returns True iff operation is successful
@@ -11,6 +19,10 @@ def add_to_database(ids: int, lsph: str,  rsph: str, bridge: str, gender: str, c
     """
     my_cursor = cursor
     id = ids
+    lsph, lcyl, laxis, ladd = details['lsph'], details['lcyl'], details['laxis'], details['ladd']
+    rsph, rcyl, raxis, radd = details['rsph'], details['rcyl'], details['raxis'], details['radd']
+    bridge, gender, description = details['bridge'], details['gender'], details['description']
+
     try:
         if not description or description == '':
             my_cursor.execute("INSERT INTO Frame (id, bridge_size, gender) VALUES (%s, %s, %s)", (id, bridge, gender))
@@ -49,7 +61,6 @@ def add_to_database(ids: int, lsph: str,  rsph: str, bridge: str, gender: str, c
         placeholders2 = ", ".join(["%s"] * len(value2))
         query2 = f"INSERT INTO Lens ({spot2}) VALUES ({placeholders2})"
         my_cursor.execute(query2, value2)
-        print('inserted')
         return True
     except:
         return False
@@ -97,11 +108,13 @@ def search_by_id(id: int, my_cursor) -> list:
     glasses_desc = my_cursor.fetchall()
     return glasses_desc
 
-def search_by_attributes(cursor, lsph = None,  rsph = None, bridge = None, gender = None, lcyl = None, laxis = None, ladd = None, rcyl = None, raxis = None, radd = None, sph_range = None, cyl_range = None, axis_range = None) -> list:
+def search_by_attributes(cursor, details: dict, sph_range = None, cyl_range = None, axis_range = None) -> list:
     """
     Returns the details of the eyeglasses which meet the specified criteria
     """
-
+    lsph, lcyl, laxis, ladd = details['lsph'], details['lcyl'], details['laxis'], details['ladd']
+    rsph, rcyl, raxis, radd = details['rsph'], details['rcyl'], details['raxis'], details['radd']
+    bridge, gender, description = details['bridge'], details['gender'], details['description']
     try:
         my_cursor = cursor
         query_call = """
@@ -133,8 +146,12 @@ def search_by_attributes(cursor, lsph = None,  rsph = None, bridge = None, gende
             query_call += ' Frame.bridge_size = ' + bridge + ' AND'
         if gender:
             query_call += " (Frame.gender = '" + gender + "' OR Frame.gender = 'MF') AND"
+        if description:
+            query_call += " Frame.description = '" + description + "' AND"
 
-        if not lcyl and not lsph and not laxis and not rcyl and not rsph and not raxis and not bridge and not gender and not radd and not ladd:
+        if (not lcyl and not lsph and not laxis and not rcyl and not rsph
+                and not raxis and not bridge and not gender
+                and not radd and not ladd and not description):
             query_call = query_call[:-5] + " LIMIT 10 OFFSET 0"
         else:
             query_call = query_call[:-3] + " LIMIT 10 OFFSET 0"
