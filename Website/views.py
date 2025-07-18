@@ -19,7 +19,7 @@ def protected_page_general():
                 session['id'] = ''
                 return render_template('General_lookup.html', id_result = 'Glasses Not Found', attribute_result = session['attributes'], previous_search = session['last search'])
             session['id'] = result
-            return render_template('General_lookup.html', id_result = session['id'], attribute_result = session['attributes'])
+            return render_template('General_lookup.html', id_result = session['id'], attribute_result = session['attributes'], previous_search = session['last search'])
         elif the_button == "attributes":
             print(1)
             details = info_retrieve(form)
