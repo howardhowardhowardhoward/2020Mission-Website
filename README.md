@@ -40,7 +40,7 @@
 
 3. Install dependencies:
    ```bash
-   pip install -r requirements.txt
+   pip install -r requirements.txt.txt
    ```
 
 4. Create a `.env` file in your project root with the following content:
