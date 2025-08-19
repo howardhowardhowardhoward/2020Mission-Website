@@ -10,6 +10,7 @@ def login():
     if request.method == "POST":
         usernames = request.form.get('username')
         password = request.form.get('password')
+        print(usernames, password)
 
         if (usernames, password) in users:
             session['logged_in'] = True

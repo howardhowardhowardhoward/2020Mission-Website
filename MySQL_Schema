@@ -1,0 +1,24 @@
+CREATE TABLE `login_info` (
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `privileges` int DEFAULT NULL,
+  PRIMARY KEY (`username`)
+)
+
+CREATE TABLE `Lens` (
+  `id` int NOT NULL,
+  `Eye` enum('L','R') NOT NULL,
+  `sph` float DEFAULT NULL,
+  `cyl` float DEFAULT NULL,
+  `axis` int DEFAULT NULL,
+  `add` float DEFAULT NULL,
+  PRIMARY KEY (`id`,`Eye`)
+)
+
+CREATE TABLE `Frame` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `bridge_size` int DEFAULT NULL,
+  `gender` varchar(3) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)
