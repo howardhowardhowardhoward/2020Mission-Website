@@ -43,7 +43,9 @@
    pip install -r requirements.txt.txt
    ```
 
-4. Create a `.env` file in your project root with the following content:
+4.Setup MySQL database using the schema in the repository.
+
+5. Create a `.env` file in your project root with the following content:
 
 ```env
 DB_HOST=your_host
@@ -52,12 +54,12 @@ DB_PASSWORD=your_password
 DB_NAME=your_db_name
 ```
 
-5. Run the app:
+6. Run the app:
    ```bash
    python Main.py
    ```
 
-6. Visit [http://localhost:5001](http://localhost:5001) in your browser.
+7. Visit [http://localhost:5001](http://localhost:5001) in your browser.
 
 ## Project Structure
 
