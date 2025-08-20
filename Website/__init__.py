@@ -6,13 +6,24 @@ import mysql.connector
 def create_app():
     app = Flask(__name__)
     app.secret_key = 'hello world'
-    app.mydb = mysql.connector.connect(
-        host= os.getenv('DB_HOST'),
-        user= os.getenv('DB_USER'),
-        password= os.getenv('DB_PASS'),
-        port=int(os.getenv('DB_PORT', 3306)),
-        database= os.getenv('DB_NAME')
-    )
+    def get_db():
+        if "db" not in g:
+            g.db = mysql.connector.connect(
+                host=os.getenv('DB_HOST'),
+                user=os.getenv('DB_USER'),
+                password=os.getenv('DB_PASS'),
+                port=int(os.getenv('DB_PORT', 3306)),
+                database=os.getenv('DB_NAME')
+            )
+        return g.db
+
+    @app.teardown_appcontext
+    def close_db(exception=None):
+        db = g.pop("db", None)
+        if db is not None:
+            db.close()
+
+    app.get_db = get_db
 
     from .views import views
     from .auth import auth
